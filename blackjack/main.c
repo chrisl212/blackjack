@@ -148,7 +148,15 @@ int main(void) {
     }
     i = 2;
     printf("You have been dealt a%s %s and a%s %s; the dealer is showing a%s %s\n", (isvowel(*(player.cards[0].name)))?"n":"", player.cards[0].name, (isvowel(*(player.cards[1].name)))?"n":"", player.cards[1].name, (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name);
-    
+
+	if(player.cards[0].value+player.cards[1].value == 21 && dealer.cards[0].value + dealer.cards[1].value != 21 ){
+		printf("Blackjack! You win!");
+		return 0;
+			}
+	else if(player.cards[0].value+player.cards[1].value == 21 && dealer.cards[0].value + dealer.cards[1].value == 21){
+		printf("Blackjack! But the dealer also had a%s %s and a%s %s. Tie!", (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name, (isvowel(*(dealer.cards[1].name)))?"n":"", dealer.cards[1].name);
+		return 0;
+		}
     while (1) {
         puts("Hit or stay?");
         scanf("%s", buf);
@@ -163,9 +171,6 @@ int main(void) {
                 if (val > 21) {
                     puts("You have busted!");
                     return 0;
-                }
-                else if (val == 21) {
-                    printf("Blackjack! %s wins.\n", player.name);
                 }
             }
         }
