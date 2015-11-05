@@ -127,7 +127,7 @@ card_t card() {
 }
 
 int main(void) {
-    int i, j, val;
+    int i, h, j, val, val2;
     char buf[BLOCK];
     player_t dealer, player;
     
@@ -147,6 +147,7 @@ int main(void) {
         player.cards[i] = card();
     }
     i = 2;
+    
     printf("You have been dealt a%s %s and a%s %s; the dealer is showing a%s %s\n", (isvowel(*(player.cards[0].name)))?"n":"", player.cards[0].name, (isvowel(*(player.cards[1].name)))?"n":"", player.cards[1].name, (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name);
 
 	if(player.cards[0].value+player.cards[1].value == 21 && dealer.cards[0].value + dealer.cards[1].value != 21 ){
@@ -154,7 +155,7 @@ int main(void) {
 		return 0;
 			}
 	else if(player.cards[0].value+player.cards[1].value == 21 && dealer.cards[0].value + dealer.cards[1].value == 21){
-		printf("Blackjack! But the dealer also had a%s %s and a%s %s. Tie!", (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name, (isvowel(*(dealer.cards[1].name)))?"n":"", dealer.cards[1].name);
+		printf("Blackjack! But the dealer also had a%s %s and a%s %s. Tie!\n", (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name, (isvowel(*(dealer.cards[1].name)))?"n":"", dealer.cards[1].name);
 		return 0;
 		}
     while (1) {
@@ -172,6 +173,10 @@ int main(void) {
                     puts("You have busted!");
                     return 0;
                 }
+                else if (val == 21) {
+                    puts("Blackjack! You win.");
+                    return 0;
+                }
             }
         }
         else if (tolower(*buf) == 's')
@@ -180,6 +185,29 @@ int main(void) {
             puts("Please try again");
         
     }
+    h = 2;
+    while (1) {
+        for (j = 0, val = 0; j < h; j++) {
+            val += dealer.cards[j].value;
+            if (val > 21) {
+                printf("The dealer has busted. %s wins!\n", player.name);
+                return 0;
+            }
+            else if (val == 21) {
+                puts("Blackjack! The dealer wins.");
+                return 0;
+            }
+        }
+        if (val < 17) {
+            dealer.cards = realloc(dealer.cards, ++h);
+            dealer.cards[h-1] = card();
+        }
+        else
+            break;
+    }
+    for (j = 0, val = 0; j < i; j++, val += player.cards[j].value); //val contains player's, val2 contains dealer's
+    for (j = 0, val2 = 0; j < h; j++, val2 += dealer.cards[j].value); //val contains player's, val2 contains dealer's
+    printf("Dealer ended with %d, %s with %d.\n", val2, player.name, val);
     
     return 0;
 }
