@@ -39,6 +39,24 @@ typedef struct {
     card_t *cards;
 } player_t;
 
+int isvowel(char c) {
+    switch (tolower(c)) {
+        case 'a':
+            return 1;
+        case 'e':
+            return 1;
+        case 'i':
+            return 1;
+        case 'o':
+            return 1;
+        case 'u':
+            return 1;
+        default:
+            return 0;
+    }
+    return 0;
+}
+
 card_t card() {
     enum cards type;
     card_t card;
@@ -129,7 +147,7 @@ int main(void) {
         player.cards[i] = card();
     }
     i = 2;
-    printf("You have been dealt a %s and a %s; the dealer is showing a %s\n", player.cards[0].name, player.cards[1].name, dealer.cards[0].name);
+    printf("You have been dealt a%s %s and a%s %s; the dealer is showing a%s %s\n", (isvowel(*(player.cards[0].name)))?"n":"", player.cards[0].name, (isvowel(*(player.cards[1].name)))?"n":"", player.cards[1].name, (isvowel(*(dealer.cards[0].name)))?"n":"", dealer.cards[0].name);
     
     while (1) {
         puts("Hit or stay?");
@@ -137,11 +155,11 @@ int main(void) {
         if (tolower(*buf) == 'h') {
             player.cards = realloc(player.cards, ++i);
             player.cards[i-1] = card();
-            printf("You have been dealt a %s; you now have ", player.cards[i-1].name);
+            printf("You have been dealt a%s %s; you now have ", (isvowel(*(player.cards[i-1].name)))?"n":"", player.cards[i-1].name);
             
             for (j = 0, val = 0; j < i; j++) {
                 val += player.cards[j].value;
-                (j == i-1)?printf("and a %s.\n", player.cards[j].name):printf("a %s, ", player.cards[j].name);
+                (j == i-1)?printf("and a%s %s.\n", (isvowel(*(player.cards[j].name)))?"n":"", player.cards[j].name):printf("a%s %s, ", (isvowel(*(player.cards[j].name)))?"n":"", player.cards[j].name);
                 if (val > 21) {
                     puts("You have busted!");
                     return 0;
