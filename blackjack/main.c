@@ -2,7 +2,7 @@
 //  main.c
 //  blackjack
 //
-//  Created by Christopher Loonam on 11/5/15.
+//  Created by Christopher Homo Loonam on 11/5/15.
 //  Copyright (c) 2015 Christopher Loonam. All rights reserved.
 //
 
