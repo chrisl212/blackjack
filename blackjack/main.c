@@ -68,7 +68,6 @@ card_t card() {
         case ACE:
             card.name = "Ace";
             break;
-            
         case TWO:
             card.name = "Two";
             break;
@@ -187,18 +186,18 @@ int main(void) {
     }
     h = 2;
     while (1) {
-        for (j = 0, val = 0; j < h; j++) {
-            val += dealer.cards[j].value;
-            if (val > 21) {
+        for (j = 0, val2 = 0; j < h; j++) {
+            val2 += dealer.cards[j].value;
+            if (val2 > 21) {
                 printf("The dealer has busted. %s wins!\n", player.name);
                 return 0;
             }
-            else if (val == 21) {
+            else if (val2 == 21) {
                 puts("Blackjack! The dealer wins.");
                 return 0;
             }
         }
-        if (val < 17) {
+        if (val2 < 17) {
             dealer.cards = realloc(dealer.cards, ++h);
             dealer.cards[h-1] = card();
         }
